@@ -1,12 +1,13 @@
-const path = require('path'); // Add this line at the top
-
 require('dotenv').config(); // Load environment variables
 const express = require('express');
 const multer = require('multer');
 const axios = require('axios');
+const path = require('path');  //For handling file paths
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
+// Serve static files from the "frontend" directory
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 //API Keys
 const SPEECH_TO_TEXT_API_KEY = process.env.STT_API_KEY;
