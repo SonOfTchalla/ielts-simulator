@@ -1,3 +1,5 @@
+const path = require('path'); // Add this line at the top
+
 require('dotenv').config(); // Load environment variables
 const express = require('express');
 const multer = require('multer');
@@ -9,6 +11,9 @@ const upload = multer({ dest: 'uploads/' });
 //API Keys
 const SPEECH_TO_TEXT_API_KEY = process.env.STT_API_KEY;
 const LLM_API_KEY = process.env.OPENAI_API_KEY;
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint to analyze audio
 app.post('/analyze', upload.single('file'), async (req, res) => {
