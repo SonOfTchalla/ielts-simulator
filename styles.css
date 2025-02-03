@@ -10,3 +10,11 @@ body {
     margin: 0 auto;
     text-align: center;
 }
+
+.hidden {
+    display: none;
+}
+
+#test-interface {
+    margin-top: 20px;
+}
