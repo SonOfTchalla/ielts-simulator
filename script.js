@@ -26,3 +26,19 @@ testModeButton.addEventListener('click', () => {
     testInterface.classList.remove('hidden');
     startTestSession();
 });
+
+// Start recording
+startRecordingButton.addEventListener('click', async () => {
+    if (recorder && recorder.state === 'recording') {
+        recorder.stop();
+        startRecordingButton.textContent = 'Start Recording';
+    } else {
+        audioChunks = [];
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = (e) => audioChunks.push(e.data);
+        recorder.onstop = processAudio;
+        recorder.start();
+        startRecordingButton.textContent = 'Stop Recording';
+    }
+});
