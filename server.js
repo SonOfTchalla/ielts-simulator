@@ -7,8 +7,8 @@ const upload = multer({ dest: 'uploads/' });
 
 
 //API Keys
-const SPEECH_TO_TEXT_API_KEY = process.env.OPENAI_API_KEY;
-const LLM_API_KEY = process.env.STT_API_KEY;
+const SPEECH_TO_TEXT_API_KEY = process.env.STT_API_KEY;
+const LLM_API_KEY = process.env.OPENAI_API_KEY;
 
 // Endpoint to analyze audio
 app.post('/analyze', upload.single('file'), async (req, res) => {
