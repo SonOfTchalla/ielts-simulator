@@ -29,7 +29,7 @@ app.post('/analyze', upload.single('file'), async (req, res) => {
 // Transcribe audio using Google Speech-to-Text API
 async function transcribeAudio(filePath) {
     const speech = require('@google-cloud/speech');
-    const client = new speech.SpeechClient({ keyFilename: SPEECH_TO_TEXT_API_KEY });
+    const client = new speech.SpeechClient();
 
     const audio = {
         content: require('fs').readFileSync(filePath).toString('base64'),
