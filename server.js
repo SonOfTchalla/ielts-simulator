@@ -35,8 +35,8 @@ async function transcribeAudio(filePath) {
         content: require('fs').readFileSync(filePath).toString('base64'),
     };
     const config = {
-        encoding: 'LINEAR16',
-        sampleRateHertz: 16000,
+        encoding: 'WEBM_OPUS',
+        sampleRateHertz: 48000,
         languageCode: 'en-US',
     };
     const request = { audio, config };
