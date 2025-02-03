@@ -15,3 +15,14 @@ const questions = [
     "Describe a book you recently read.",
     "Discuss the importance of education."
 ];
+
+// Initialize the test interface
+practiceModeButton.addEventListener('click', () => {
+    testInterface.classList.remove('hidden');
+    startPracticeSession();
+});
+
+testModeButton.addEventListener('click', () => {
+    testInterface.classList.remove('hidden');
+    startTestSession();
+});
