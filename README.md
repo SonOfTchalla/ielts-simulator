@@ -1,2 +1,4 @@
 # ielts-simulator
-A real-time IELTS Speaking Test simulator with AI-powered feedback.
+
+## Overview
+This tool simulates a real-time IELTS Speaking Test. It allows users to practice speaking English and provides performance assessments based on IELTS criteria.
