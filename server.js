@@ -10,7 +10,6 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 //API Keys
-const SPEECH_TO_TEXT_API_KEY = process.env.STT_API_KEY;
 const LLM_API_KEY = process.env.OPENAI_API_KEY;
 
 
