@@ -42,3 +42,19 @@ startRecordingButton.addEventListener('click', async () => {
         startRecordingButton.textContent = 'Stop Recording';
     }
 });
+
+// Process recorded audio
+async function processAudio() {
+    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'recording.wav');
+
+    // Send audio to the backend for transcription and analysis
+    const response = await fetch('/analyze', {
+        method: 'POST',
+        body: formData
+    });
+    const result = await response.json();
+    transcriptElement.textContent = `Transcript: ${result.transcript}`;
+    feedbackElement.textContent = `Feedback: ${result.feedback}`;
+}
