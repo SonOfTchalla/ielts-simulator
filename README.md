@@ -14,3 +14,7 @@ This tool simulates a real-time IELTS Speaking Test. It allows users to practice
 3. Add your API keys in `server.js`.
 4. Run the server: `node server.js`.
 5. Open `index.html` in your browser.
+
+## APIs Used
+- Google Speech-to-Text API for transcription.
+- OpenAI GPT-4 for feedback generation.
