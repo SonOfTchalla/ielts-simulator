@@ -41,3 +41,19 @@ async function transcribeAudio(filePath) {
     const [response] = await client.recognize(request);
     return response.results.map(result => result.alternatives[0].transcript).join('\n');
 }
+
+// Analyze transcript using OpenAI API
+async function analyzeTranscript(transcript) {
+    const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+            model: 'gpt-4',
+            messages: [
+                { role: 'system', content: 'You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation.' },
+                { role: 'user', content: transcript }
+            ]
+        },
+        { headers: { 'Authorization': `Bearer ${LLM_API_KEY}` } }
+    );
+    return response.data.choices[0].message.content;
+}
