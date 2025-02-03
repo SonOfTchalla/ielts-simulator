@@ -58,3 +58,13 @@ async function processAudio() {
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
     feedbackElement.textContent = `Feedback: ${result.feedback}`;
 }
+
+// Start a practice session
+function startPracticeSession() {
+    questionElement.textContent = questions[0];
+}
+
+// Start a full test session
+function startTestSession() {
+    // Implement full test logic here
+}
