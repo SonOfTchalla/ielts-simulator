@@ -57,3 +57,8 @@ async function analyzeTranscript(transcript) {
     );
     return response.data.choices[0].message.content;
 }
+
+// Start the server
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
