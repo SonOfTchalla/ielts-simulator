@@ -56,6 +56,8 @@ practiceModeButton.addEventListener('click', () => {
     testInterface.classList.remove('hidden');
     resetInterface(); // Reset fields and hide timer
     startPracticeSession();
+    practiceModeButton.classList.add('selected');
+    testModeButton.classList.remove('selected');
 });
 
 testModeButton.addEventListener('click', () => {
@@ -63,6 +65,8 @@ testModeButton.addEventListener('click', () => {
     resetInterface(); // Reset fields
     timerElement.classList.remove('hidden'); // Show the timer
     startTestSession();
+    testModeButton.classList.add('selected');
+    practiceModeButton.classList.remove('selected');
 });
 
 // Start recording
