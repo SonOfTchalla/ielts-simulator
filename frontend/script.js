@@ -225,3 +225,8 @@ downloadReportButton.addEventListener('click', () => {
     generatePDFReport(transcript, feedback);
 });
 document.querySelector('#test-interface').appendChild(downloadReportButton);
+
+function displayScores(scores) {
+    const overallScore = ((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1);
+    scoresElement.textContent = `Scores: Fluency (${scores.fluency}), Lexical (${scores.lexical}), Grammar (${scores.grammar}), Pronunciation (${scores.pronunciation}), Overall (${overallScore})`;
+}
