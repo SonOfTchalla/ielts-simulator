@@ -73,3 +73,16 @@ button:hover {
 #test-interface {
     margin-top:  1.5rem;
 }
+
+#question {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 1.5rem;
+}
+
+#timer {
+    font-size: 1.1rem;
+    color: #e74c3c;
+    margin-bottom: 1.5rem;
+}
