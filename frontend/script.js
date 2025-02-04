@@ -83,3 +83,17 @@ function startTestSession() {
     questionElement.textContent = questions[1]; // Part 2: Long Turn
     startTimer();
 }
+
+function generatePDFReport(transcript, feedback) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.text('IELTS Speaking Test Report', 10, 10);
+    doc.text(`Transcript: ${transcript}`, 10, 20);
+    doc.text(`Feedback: ${feedback}`, 10, 30);
+
+    doc.save('ielts_report.pdf');
+}
+
+// Call this function after receiving feedback
+generatePDFReport(transcriptElement.textContent, feedbackElement.textContent);
