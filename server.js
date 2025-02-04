@@ -85,6 +85,48 @@ async function analyzeTranscript(transcript) {
     }
 }
 
+// Calculates scores based on the transcript
+async function calculateScores(transcript) {
+    const inputPrompt = `Evaluate the following IELTS Speaking Test transcript based on the four IELTS criteria: 
+    1. Fluency and Coherence (0-9)
+    2. Lexical Resource (0-9)
+    3. Grammatical Range and Accuracy (0-9)
+    4. Pronunciation (0-9)
+    Provide scores in JSON format like this: { "fluency": 7, "lexical": 6, "grammar": 7, "pronunciation": 6 }
+    User: ${transcript}`;
+
+        const response = await axios.post(
+            'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
+            {
+                inputs: inputPrompt,
+                parameters: {
+                    max_length: 100,
+                    temperature: 0.7,
+                    return_full_text: false
+                }
+            },
+            { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
+        );
+
+        // If the model is loading, retry after the estimated time
+        if (response.data.error && response.data.error.includes('currently loading')) {
+            const estimatedTime = response.data.estimated_time * 1000; // Convert to milliseconds
+            console.log(`Model is loading. Retrying in ${estimatedTime / 1000} seconds...`);
+            await new Promise(resolve => setTimeout(resolve, estimatedTime));
+            return analyzeTranscript(transcript); // Retry the request
+        }
+
+        // Extract just the generated feedback without input text
+        const fullResponse = response.data[0].generated_text;
+        
+        // Remove the input prompt from the response if it appears
+        const cleanedResponse = fullResponse.replace(inputPrompt, '').trim();
+
+    // Extract scores from the response
+    const scores = JSON.parse(response.data.choices[0].message.content);
+    return scores;
+}
+
 // Start the server
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
