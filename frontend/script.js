@@ -31,11 +31,14 @@ function resetInterface() {
 // Initialize the test interface
 practiceModeButton.addEventListener('click', () => {
     testInterface.classList.remove('hidden');
+    resetInterface(); // Reset fields and hide timer
     startPracticeSession();
 });
 
 testModeButton.addEventListener('click', () => {
     testInterface.classList.remove('hidden');
+    resetInterface(); // Reset fields
+    timerElement.classList.remove('hidden'); // Show the timer
     startTestSession();
 });
 
