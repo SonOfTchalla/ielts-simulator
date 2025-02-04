@@ -10,7 +10,7 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 //API Keys
-const HUGGING_FACE_API_KEY = process.env.OPENAI_API_KEY;
+const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY;
 
 
 // Endpoint to analyze audio
