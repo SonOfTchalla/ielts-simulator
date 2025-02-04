@@ -102,17 +102,20 @@ async function processAudio() {
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
     feedbackElement.textContent = `Feedback: ${result.feedback}`;
 
-    // Calculate scores
-    const scores = await calculateScores(result.transcript);
+     // Enable the "Download Report" button only in Test Mode
+    if (testModeButton.classList.contains('selected')) {
+        // Calculate scores
+        const scores = await calculateScores(result.transcript);
 
-    // Enable the "Download Report" button and update its event listener
-    downloadReportButton.disabled = false;
-    downloadReportButton.addEventListener('click', () => {
-        generatePDFReport(result.transcript, result.feedback, scores);
-    });
+        // Enable the "Download Report" button and update its event listener
+        downloadReportButton.disabled = false;
+        downloadReportButton.onclick = () => {
+            generatePDFReport(result.transcript, result.feedback, scores);
+        };
 
     // Display scores in the UI
     displayScores(scores);
+    }
 }
 
 // Start a practice session
