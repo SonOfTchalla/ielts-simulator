@@ -79,5 +79,7 @@ function startTimer() {
 
 // Start a full test session
 function startTestSession() {
-    // Implement full test logic here
+    testInterface.classList.remove('hidden');
+    questionElement.textContent = questions[1]; // Part 2: Long Turn
+    startTimer();
 }
