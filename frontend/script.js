@@ -8,6 +8,8 @@ const feedbackElement = document.getElementById('feedback');
 
 let recorder;
 let audioChunks = [];
+let timer;
+let timeLeft = 120; // 2 minutes for Part 2 of the test
 
 // Load questions for the test
 const questions = [
@@ -62,6 +64,17 @@ async function processAudio() {
 // Start a practice session
 function startPracticeSession() {
     questionElement.textContent = questions[0];
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert('Time is up!');
+        }
+    }, 1000);
 }
 
 // Start a full test session
