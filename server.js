@@ -45,20 +45,34 @@ async function transcribeAudio(filePath) {
     return response.results.map(result => result.alternatives[0].transcript).join('\n');
 }
 
-// Analyze transcript using OpenAI API
+// Analyze transcript using HUgging Face API
 async function analyzeTranscript(transcript) {
-    const response = await axios.post(
-        'https://api-inference.huggingface.co/models/gpt2',
-        {
-            inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
-            parameters: {
-                max_length: 100, // Adjust as needed
-                temperature: 0.7, // Adjust for creativity
-            }
-        },
-        { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
-    );
-    return response.data.choices[0].message.content;
+    try {
+        const response = await axios.post(
+            'https://api-inference.huggingface.co/models/distilgpt2',
+            {
+                inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
+                parameters: {
+                    max_length: 100,
+                    temperature: 0.7,
+                }
+            },
+            { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
+        );
+
+        // If the model is loading, retry after the estimated time
+        if (response.data.error && response.data.error.includes('currently loading')) {
+            const estimatedTime = response.data.estimated_time * 1000; // Convert to milliseconds
+            console.log(`Model is loading. Retrying in ${estimatedTime / 1000} seconds...`);
+            await new Promise(resolve => setTimeout(resolve, estimatedTime));
+            return analyzeTranscript(transcript); // Retry the request
+        }
+
+        return response.data[0].generated_text;
+    } catch (error) {
+        console.error('Error calling Hugging Face API:', error.response ? error.response.data : error.message);
+        return 'Error: Unable to generate feedback. Please try again.';
+    }
 }
 
 // Start the server
