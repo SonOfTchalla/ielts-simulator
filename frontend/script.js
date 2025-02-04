@@ -200,5 +200,13 @@ function generatePDFReport(transcript, feedback) {
     doc.save('ielts_speaking_report.pdf');
 }
 
-// Call this function after receiving feedback
-generatePDFReport(transcriptElement.textContent, feedbackElement.textContent);
+// Add a "Download Report" button
+const downloadReportButton = document.createElement('button');
+downloadReportButton.textContent = 'Download Report';
+downloadReportButton.id = 'download-report';
+downloadReportButton.addEventListener('click', () => {
+    const transcript = transcriptElement.textContent.replace('Transcript: ', '');
+    const feedback = feedbackElement.textContent.replace('Feedback: ', '');
+    generatePDFReport(transcript, feedback);
+});
+document.querySelector('#test-interface').appendChild(downloadReportButton);
