@@ -172,7 +172,7 @@ nextQuestionButton.addEventListener('click', nextQuestion);
 document.querySelector('#test-interface').appendChild(nextQuestionButton);
 
 
-function generatePDFReport(transcript, feedback) {
+function generatePDFReport(transcript, feedback ,scores) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
@@ -189,12 +189,16 @@ function generatePDFReport(transcript, feedback) {
     doc.text('Feedback:', 10, 80);
     doc.text(feedback, 10, 90, { maxWidth: 180 });
 
-    // Add scores (example scores)
+    // Add scores
     doc.text('Scores:', 10, 140);
-    doc.text('Fluency & Coherence: 7.0', 10, 150);
-    doc.text('Lexical Resource: 6.5', 10, 160);
-    doc.text('Grammatical Range & Accuracy: 7.5', 10, 170);
-    doc.text('Pronunciation: 6.0', 10, 180);
+    doc.text(`Fluency & Coherence: ${scores.fluency}`, 10, 150);
+    doc.text(`Lexical Resource: ${scores.lexical}`, 10, 160);
+    doc.text(`Grammatical Range & Accuracy: ${scores.grammar}`, 10, 170);
+    doc.text(`Pronunciation: ${scores.pronunciation}`, 10, 180);
+
+    // Calculate overall band score
+    const overallScore = ((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1);
+    doc.text(`Overall Band Score: ${overallScore}`, 10, 190);
 
     // Save the PDF
     doc.save('ielts_speaking_report.pdf');
