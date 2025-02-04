@@ -99,7 +99,7 @@ async function processAudio() {
 
 // Start a practice session
 function startPracticeSession() {
-    questionElement.textContent = questions[0];
+    questionElement.textContent = part1Questions[currentQuestionIndex];
 }
 
 function startTimer() {
