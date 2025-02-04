@@ -135,7 +135,7 @@ function nextQuestion() {
             currentPart = 2;
             currentQuestionIndex = 0;
             questionElement.textContent = part2Questions[currentQuestionIndex];
-            timerElement.classList.remove('hidden'); // Show timer for Part 2
+            timerElement.style.display = 'block'; // Show timer for Part 2
             startTimer();
         }
     } else if (currentPart === 2) {
@@ -146,7 +146,8 @@ function nextQuestion() {
             currentPart = 3;
             currentQuestionIndex = 0;
             questionElement.textContent = part3Questions[currentQuestionIndex];
-            timerElement.classList.add('hidden'); // Hide timer for Part 3
+            timerElement.style.display = 'none'; // Hide timer for Part 3
+            clearInterval(timer); // Stop the timer
         }
     } else if (currentPart === 3) {
         if (currentQuestionIndex < part3Questions.length - 1) {
