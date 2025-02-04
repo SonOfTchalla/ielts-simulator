@@ -48,13 +48,16 @@ async function transcribeAudio(filePath) {
 // Analyze transcript using HUgging Face API
 async function analyzeTranscript(transcript) {
     try {
+        const inputPrompt = `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`;
+
         const response = await axios.post(
             'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
             {
-                inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
+                inputs: inputPrompt,
                 parameters: {
                     max_length: 100,
                     temperature: 0.7,
+                    return_full_text: false
                 }
             },
             { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
@@ -68,7 +71,14 @@ async function analyzeTranscript(transcript) {
             return analyzeTranscript(transcript); // Retry the request
         }
 
-        return response.data[0].generated_text;
+        // Extract just the generated feedback without input text
+        const fullResponse = response.data[0].generated_text;
+        
+        // Remove the input prompt from the response if it appears
+        const cleanedResponse = fullResponse.replace(inputPrompt, '').trim();
+        
+        return cleanedResponse || "Could not generate feedback. Please try again.";
+        
     } catch (error) {
         console.error('Error calling Hugging Face API:', error.response ? error.response.data : error.message);
         return 'Error: Unable to generate feedback. Please try again.';
