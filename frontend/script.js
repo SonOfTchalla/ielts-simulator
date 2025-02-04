@@ -126,6 +126,40 @@ function startTestSession() {
     }
 }
 
+// Move to the next question
+function nextQuestion() {
+    if (currentPart === 1) {
+        if (currentQuestionIndex < part1Questions.length - 1) {
+            currentQuestionIndex++;
+            questionElement.textContent = part1Questions[currentQuestionIndex];
+        } else {
+            currentPart = 2;
+            currentQuestionIndex = 0;
+            questionElement.textContent = part2Questions[currentQuestionIndex];
+            timerElement.classList.remove('hidden'); // Show timer for Part 2
+            startTimer();
+        }
+    } else if (currentPart === 2) {
+        if (currentQuestionIndex < part2Questions.length - 1) {
+            currentQuestionIndex++;
+            questionElement.textContent = part2Questions[currentQuestionIndex];
+        } else {
+            currentPart = 3;
+            currentQuestionIndex = 0;
+            questionElement.textContent = part3Questions[currentQuestionIndex];
+            timerElement.classList.add('hidden'); // Hide timer for Part 3
+        }
+    } else if (currentPart === 3) {
+        if (currentQuestionIndex < part3Questions.length - 1) {
+            currentQuestionIndex++;
+            questionElement.textContent = part3Questions[currentQuestionIndex];
+        } else {
+            alert('Test completed!');
+            resetInterface();
+        }
+    }
+}
+
 function generatePDFReport(transcript, feedback) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
