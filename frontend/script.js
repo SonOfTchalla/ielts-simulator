@@ -47,6 +47,8 @@ function resetInterface() {
     timerElement.textContent = 'Time Left: 120s';
     timerElement.classList.add('hidden'); // Hide the timer
     clearInterval(timer); // Clear any active timer
+    currentPart = 1; // Reset to Part 1
+    currentQuestionIndex = 0; // Reset question index
 }
 
 // Initialize the test interface
