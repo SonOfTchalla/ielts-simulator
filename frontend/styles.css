@@ -118,3 +118,27 @@ button:hover {
     border-radius: 8px;
     border: 1px solid #ddd;
 }
+
+/* Media Queries*/
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    #question {
+        font-size: 1.1rem;
+    }
+
+    #timer {
+        font-size: 1rem;
+    }
+}
