@@ -176,11 +176,28 @@ function generatePDFReport(transcript, feedback) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    // Add title
+    doc.setFontSize(18);
     doc.text('IELTS Speaking Test Report', 10, 10);
-    doc.text(`Transcript: ${transcript}`, 10, 20);
-    doc.text(`Feedback: ${feedback}`, 10, 30);
 
-    doc.save('ielts_report.pdf');
+    // Add transcript
+    doc.setFontSize(12);
+    doc.text('Transcript:', 10, 20);
+    doc.text(transcript, 10, 30, { maxWidth: 180 });
+
+    // Add feedback
+    doc.text('Feedback:', 10, 80);
+    doc.text(feedback, 10, 90, { maxWidth: 180 });
+
+    // Add scores (example scores)
+    doc.text('Scores:', 10, 140);
+    doc.text('Fluency & Coherence: 7.0', 10, 150);
+    doc.text('Lexical Resource: 6.5', 10, 160);
+    doc.text('Grammatical Range & Accuracy: 7.5', 10, 170);
+    doc.text('Pronunciation: 6.0', 10, 180);
+
+    // Save the PDF
+    doc.save('ielts_speaking_report.pdf');
 }
 
 // Call this function after receiving feedback
