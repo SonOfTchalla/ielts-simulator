@@ -124,6 +124,23 @@ button:hover {
     border: 1px solid #ddd;
 }
 
+#next-question {
+    background-color: #9b59b6;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+}
+
+#next-question:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
 /* Media Queries*/
 @media (max-width: 600px) {
     .container {
