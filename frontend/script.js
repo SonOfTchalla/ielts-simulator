@@ -115,7 +115,6 @@ function startTimer() {
 
 // Start a full test session
 function startTestSession() {
-    testInterface.classList.remove('hidden');
     if (currentPart === 1) {
         questionElement.textContent = part1Questions[currentQuestionIndex];
     } else if (currentPart === 2) {
