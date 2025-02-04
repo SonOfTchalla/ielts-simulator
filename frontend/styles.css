@@ -86,3 +86,13 @@ button:hover {
     color: #e74c3c;
     margin-bottom: 1.5rem;
 }
+
+#start-recording {
+    background-color: #e67e22;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+#start-recording:hover {
+    background-color: #d35400;
+}
