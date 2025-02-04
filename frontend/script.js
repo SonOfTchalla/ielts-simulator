@@ -36,6 +36,10 @@ const part3Questions = [
     "What role do you think art plays in society?"
 ];
 
+// Current question index
+let currentPart = 1;
+let currentQuestionIndex = 0;
+
 // Reset the interface
 function resetInterface() {
     transcriptElement.textContent = '';
