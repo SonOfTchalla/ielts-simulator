@@ -5,6 +5,7 @@ const questionElement = document.getElementById('question');
 const startRecordingButton = document.getElementById('start-recording');
 const transcriptElement = document.getElementById('transcript');
 const feedbackElement = document.getElementById('feedback');
+const timerElement = document.getElementById('timer');
 
 let recorder;
 let audioChunks = [];
@@ -17,6 +18,15 @@ const questions = [
     "Describe a book you recently read.",
     "Discuss the importance of education."
 ];
+
+// Reset the interface
+function resetInterface() {
+    transcriptElement.textContent = '';
+    feedbackElement.textContent = '';
+    timerElement.textContent = 'Time Left: 120s';
+    timerElement.classList.add('hidden'); // Hide the timer
+    clearInterval(timer); // Clear any active timer
+}
 
 // Initialize the test interface
 practiceModeButton.addEventListener('click', () => {
