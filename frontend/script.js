@@ -12,11 +12,28 @@ let audioChunks = [];
 let timer;
 let timeLeft = 120; // 2 minutes for Part 2 of the test
 
-// Load questions for the test
-const questions = [
-    "Tell me about your hometown.",
-    "Describe a book you recently read.",
-    "Discuss the importance of education."
+const part1Questions = [
+    "Can you tell me about your hometown?",
+    "What do you like most about your job or studies?",
+    "Do you prefer reading books or watching movies? Why?",
+    "How do you usually spend your weekends?",
+    "What kind of weather do you enjoy the most?"
+];
+
+const part2Questions = [
+    "Describe a memorable trip you have taken. You should say: where you went, who you went with, what you did, and why it was memorable.",
+    "Talk about a book that you recently read. You should say: what the book is about, why you chose it, and what you learned from it.",
+    "Describe a person who has influenced you. You should say: who the person is, how you know them, and why they have influenced you.",
+    "Describe a skill you would like to learn. You should say: what the skill is, why you want to learn it, and how you plan to learn it.",
+    "Talk about a piece of art (e.g., painting, sculpture) that you admire. You should say: what it is, where you saw it, and why you admire it."
+];
+
+const part3Questions = [
+    "How do you think travel can broaden a person's perspective?",
+    "Do you think reading books is more beneficial than watching movies? Why or why not?",
+    "What qualities do you think make someone a good role model?",
+    "How important is it for people to learn new skills throughout their lives?",
+    "What role do you think art plays in society?"
 ];
 
 // Reset the interface
