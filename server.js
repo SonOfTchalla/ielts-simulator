@@ -48,7 +48,7 @@ async function transcribeAudio(filePath) {
 // Analyze transcript using OpenAI API
 async function analyzeTranscript(transcript) {
     const response = await axios.post(
-        'https://api-inference.huggingface.co/models/DepSeek-R1',
+        'https://api-inference.huggingface.co/models/gpt2',
         {
             inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
             parameters: {
