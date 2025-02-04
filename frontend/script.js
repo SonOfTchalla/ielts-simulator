@@ -160,6 +160,14 @@ function nextQuestion() {
     }
 }
 
+// Add a "Next Question" button
+const nextQuestionButton = document.createElement('button');
+nextQuestionButton.textContent = 'Next Question';
+nextQuestionButton.id = 'next-question';
+nextQuestionButton.addEventListener('click', nextQuestion);
+document.querySelector('#test-interface').appendChild(nextQuestionButton);
+
+
 function generatePDFReport(transcript, feedback) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
