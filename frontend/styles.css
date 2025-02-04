@@ -147,6 +147,23 @@ button:hover {
     transform: translateY(-2px);
 }
 
+#download-report {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+}
+
+#download-report:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
 /* Media Queries*/
 @media (max-width: 600px) {
     .container {
