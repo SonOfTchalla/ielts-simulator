@@ -10,7 +10,7 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 //API Keys
-const LLM_API_KEY = process.env.OPENAI_API_KEY;
+const HUGGING_FACE_API_KEY = process.env.OPENAI_API_KEY;
 
 
 // Endpoint to analyze audio
@@ -48,15 +48,15 @@ async function transcribeAudio(filePath) {
 // Analyze transcript using OpenAI API
 async function analyzeTranscript(transcript) {
     const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
+        'https://api-inference.huggingface.co/models/DepSeek-R1',
         {
-            model: 'gpt-4o-mini',
-            messages: [
-                { role: 'system', content: 'You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation.' },
-                { role: 'user', content: transcript }
-            ]
+            inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
+            parameters: {
+                max_length: 100, // Adjust as needed
+                temperature: 0.7, // Adjust for creativity
+            }
         },
-        { headers: { 'Authorization': `Bearer ${LLM_API_KEY}` } }
+        { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
     );
     return response.data.choices[0].message.content;
 }
