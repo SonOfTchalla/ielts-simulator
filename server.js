@@ -49,7 +49,7 @@ async function transcribeAudio(filePath) {
 async function analyzeTranscript(transcript) {
     try {
         const response = await axios.post(
-            'https://api-inference.huggingface.co/models/distilgpt2',
+            'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
             {
                 inputs: `You are an IELTS examiner. Provide feedback on fluency, vocabulary, grammar, and pronunciation. User: ${transcript}`,
                 parameters: {
