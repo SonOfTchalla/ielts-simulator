@@ -35,14 +35,6 @@ h1 {
     margin-bottom: 2rem;
 }
 
-.hidden {
-    display: none;
-}
-
-#test-interface {
-    margin-top: 20px;
-}
-
 button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
@@ -54,4 +46,21 @@ button {
 
 button:hover {
     transform: translateY(-2px);
+}
+
+#practice-mode {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#practice-mode:hover {
+    background-color: #2980b9;
+}
+
+.hidden {
+    display: none;
+}
+
+#test-interface {
+    margin-top: 20px;
 }
