@@ -97,8 +97,19 @@ async function processAudio() {
         body: formData
     });
     const result = await response.json();
+
+    // Display transcript and feedback
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
     feedbackElement.textContent = `Feedback: ${result.feedback}`;
+
+    // Calculate scores
+    const scores = await calculateScores(result.transcript);
+
+    // Enable the "Download Report" button
+    downloadReportButton.disabled = false;
+    downloadReportButton.addEventListener('click', () => {
+        generatePDFReport(result.transcript, result.feedback, scores);
+    });
 }
 
 // Start a practice session
