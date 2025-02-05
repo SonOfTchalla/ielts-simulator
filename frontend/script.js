@@ -144,6 +144,9 @@ function showFinalFeedback(result) {
     feedbackElement.textContent = `Final Feedback:\n${result.feedback}`;
     displayScores(result.scores);
     downloadReportButton.disabled = false;
+    downloadReportButton.addEventListener('click', () => {
+        generatePDFReport(result.fullTranscript, result.feedback ,result.scores);
+    })
 }
 
 // Start a practice session
