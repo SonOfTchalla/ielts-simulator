@@ -111,6 +111,13 @@ function showPracticeFeedback(result) {
     }
 }
 
+function showNextPracticeQuestion() {
+    questionElement.textContent = part1Questions[practiceState.currentQuestionIndex];
+    transcriptElement.textContent = '';
+    feedbackElement.textContent = '';
+    scoresElement.textContent = '';
+}
+
 // Process recorded audio
 async function processAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
