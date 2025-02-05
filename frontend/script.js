@@ -163,7 +163,6 @@ async function processPracticeAudio() {
 function showPracticeFeedback(result) {
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
     feedbackElement.textContent = `Feedback: ${result.feedback}`;
-    scoresElement.textContent = `Suggestions: ${result.suggestions}`;
     
     // Auto-advance or manual advance
     if (practiceState.currentQuestionIndex < part1Questions.length - 1) {
