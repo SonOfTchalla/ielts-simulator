@@ -142,6 +142,15 @@ function startTimer() {
     }, 1000);
 }
 
+
+// Test session state
+let testSessionData = {
+    part1: [],
+    part2: [],
+    part3: [],
+    audioBlobs: []
+};
+
 // Start a full test session
 function startTestSession() {
     if (currentPart === 1) {
