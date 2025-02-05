@@ -7,6 +7,7 @@ const transcriptElement = document.getElementById('transcript');
 const feedbackElement = document.getElementById('feedback');
 const timerElement = document.getElementById('timer');
 const scoresElement = document.getElementById('scores');
+const partElement = document.getElementById('part');
 
 let recorder;
 let audioChunks = [];
@@ -232,6 +233,7 @@ function showFinalFeedback(result) {
 
 // Start a practice session
 function startPracticeSession() {
+    partElement.textContent = '';
     practiceModeButton.classList.add('selected');
     testModeButton.classList.remove('selected');
     currentMode = 'practice';
@@ -280,6 +282,7 @@ function startTestSession() {
 
 // Move to the next question
 function showNextTestQuestion() {
+    partElement.textContent =  `Part ${testState.currentPart}`;
     if (testState.currentPart === 1 && testState.currentQuestionIndex < part1Questions.length) {
         // Part 1: Show next question
         questionElement.textContent = part1Questions[testState.currentQuestionIndex];
