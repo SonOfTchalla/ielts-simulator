@@ -7,15 +7,15 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 
 ## Key Features
 1. Real-Time Transcription:
-    -Uses Google Speech-to-Text API for accurate transcription of user responses.
+    *Uses Google Speech-to-Text API for accurate transcription of user responses.
 2. Feedback and Scoring:
-    -Provides feedback on fluency, lexical resource, grammar, and pronunciation.
-    -Uses Falcon-7B-Instruct (via Hugging Face) for evaluating responses.
+    *Provides feedback on fluency, lexical resource, grammar, and pronunciation.
+    *Uses Falcon-7B-Instruct (via Hugging Face) for evaluating responses.
 3. PDF Report:
-    -Generates a downloadable PDF report with the transcript, feedback, and scores.
+    *Generates a downloadable PDF report with the transcript, feedback, and scores.
 4. Two Modes:
-    -Practice Mode: Instant feedback after each response.
-    -Test Mode: Full IELTS Speaking Test simulation with feedback at the end.
+    *Practice Mode: Instant feedback after each response.
+    *Test Mode: Full IELTS Speaking Test simulation with feedback at the end.
 
 ## Setup
 1. Clone the repository.
