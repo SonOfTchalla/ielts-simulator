@@ -13,6 +13,21 @@ let audioChunks = [];
 let timer;
 let timeLeft = 120; // 2 minutes for Part 2 of the test
 
+// State variables
+let currentMode = null; // 'practice' or 'test'
+let practiceState = {
+    currentQuestionIndex: 0,
+    audioBlobs: []
+};
+let testState = {
+    part1: [],
+    part2: [],
+    part3: [],
+    audioBlobs: [],
+    currentPart: 1,
+    currentQuestionIndex: 0
+};
+
 const part1Questions = [
     "Can you tell me about your hometown?"/*,
     "What do you like most about your job or studies?",
@@ -244,22 +259,6 @@ function startTimer() {
         }
     }, 1000);
 }
-
-
-// State variables
-let currentMode = null; // 'practice' or 'test'
-let practiceState = {
-    currentQuestionIndex: 0,
-    audioBlobs: []
-};
-let testState = {
-    part1: [],
-    part2: [],
-    part3: [],
-    audioBlobs: [],
-    currentPart: 1,
-    currentQuestionIndex: 0
-};
 
 // Start a full test session
 function startTestSession() {
