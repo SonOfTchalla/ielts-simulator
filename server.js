@@ -118,16 +118,17 @@ async function calculateScores(transcript) {
             'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
             {
                 inputs: `Evaluate the following IELTS Speaking Test transcript based on the four IELTS criteria: 
-                1. Fluency and Coherence (0-9)
-                2. Lexical Resource (0-9)
-                3. Grammatical Range and Accuracy (0-9)
-                4. Pronunciation (0-9)
-                Strictly provide scores in the following format:
+                1. Fluency and Coherence 
+                2. Lexical Resource 
+                3. Grammatical Range and Accuracy 
+                4. Pronunciation 
+
+                Strictly provide scores in the following format, with the scores being from 0-9:
                 fluency: [score]
                 lexical: [score]
                 grammar: [score]
                 pronunciation: [score]
-                Do not include any additional text or explanations.
+                Do not include any additional text or explanations. The scores MUST be numerical.
                 Transcript: ${transcript}`,
                 parameters: {
                     max_new_tokens: 100, // Limit the response length
@@ -156,9 +157,9 @@ async function calculateScores(transcript) {
 
             // Map the normalized key to the required key
             const keyMapping = {
-                'Fluency': 'fluency',
-                'Lexical': 'lexical',
-                'Grammatical': 'grammar',
+                'Fluency and Coherence': 'fluency',
+                'Lexical Resource': 'lexical',
+                'Grammatical Range and Accuracy': 'grammar',
                 'Pronunciation': 'pronunciation'
             };
 
