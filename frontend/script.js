@@ -144,6 +144,11 @@ async function processPracticeAudio() {
     showPracticeFeedback(result);
 }
 
+// Add a restart button for practice mode
+let restartButton = document.createElement("button");
+restartButton.id = "restart";
+restartButton.textContent = "Restart";
+
 // Shows feedback in practice mode
 function showPracticeFeedback(result) {
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
@@ -155,6 +160,10 @@ function showPracticeFeedback(result) {
             practiceState.currentQuestionIndex++;
             showNextPracticeQuestion();
         }, 30000); // Auto-advance after 30 seconds
+    }else{
+        restartButton.classList.remove('hidden');
+        testInterface.appendChild(restartButton);
+        restartButton.addEventListener('click', startPracticeSession)
     }
 }
 
@@ -199,9 +208,9 @@ async function submitFullTest() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            part1: testSessionData.part1,
-            part2: testSessionData.part2,
-            part3: testSessionData.part3
+            part1: testState.part1,
+            part2: testState.part2,
+            part3: testState.part3
         })
     });
     
@@ -215,6 +224,7 @@ function showFinalFeedback(result) {
     feedbackElement.textContent = `Final Feedback:\n${result.feedback}`;
     displayScores(result.scores);
     downloadReportButton.disabled = false;
+    downloadReportButton.classList.remove('hidden');
     downloadReportButton.addEventListener('click', () => {
         generatePDFReport(result.fullTranscript, result.feedback ,result.scores);
     })
@@ -230,7 +240,10 @@ function startPracticeSession() {
         audioBlobs: []
     };
     testInterface.classList.remove('hidden');
-    timerElement.classList.add('hidden');
+    timerElement.style.display = 'none';
+    downloadReportButton.classList.add('hidden');
+    nextQuestionButton.classList.add('hidden');
+    restartButton.classList.add('hidden');
     showNextPracticeQuestion();
 }
 
@@ -260,6 +273,8 @@ function startTestSession() {
         currentQuestionIndex: 0
     };
     testInterface.classList.remove('hidden');
+    nextQuestionButton.classList.add('hidden');
+    downloadReportButton.classList.add('hidden');
     showNextTestQuestion();
 }
 
@@ -269,15 +284,18 @@ function showNextTestQuestion() {
         // Part 1: Show next question
         questionElement.textContent = part1Questions[testState.currentQuestionIndex];
         testState.currentQuestionIndex++;
-    } else if (testState.currentPart === 2) {
+    } else if (testState.currentPart === 2 && testState.currentQuestionIndex < part2Questions.length) {
         // Part 2: Show the long turn question and start the timer
         questionElement.textContent = part2Questions[testState.currentQuestionIndex];
         timerElement.style.display = 'block'; // Show the timer
         startTimer(); // Start the timer
+        nextQuestionButton.classList.remove('hidden');
     } else if (testState.currentPart === 3 && testState.currentQuestionIndex < part3Questions.length) {
         // Part 3: Show next question
         questionElement.textContent = part3Questions[testState.currentQuestionIndex];
         testState.currentQuestionIndex++;
+        timerElement.style.display = 'none';
+        nextQuestionButton.classList.add("hidden");
     } else {
         // Move to the next part or end the test
         if (testState.currentPart < 3) {
@@ -296,8 +314,9 @@ const nextQuestionButton = document.createElement('button');
 nextQuestionButton.textContent = 'Next Question';
 nextQuestionButton.id = 'next-question';
 nextQuestionButton.addEventListener('click', () => {
-    if (currentPart === 2 && timer) {
+    if (testState.currentPart === 2 && timer) {
         clearInterval(timer); // Stop the timer if moving from Part 2
+        testState.currentQuestionIndex++;
     }
     showNextTestQuestion();
 });
