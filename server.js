@@ -17,9 +17,8 @@ app.post('/analyze-practice', upload.single('file'), async (req, res) => {
     try {
         const transcript = await transcribeAudio(req.file.path);
         const feedback = await analyzeTranscript(transcript);
-        const suggestions = await getVocabularySuggestions(transcript);
         
-        res.json({ transcript, feedback, suggestions });
+        res.json({ transcript, feedback});
     } catch (error) {
         console.error('Practice mode error:', error);
         res.status(500).json({ error: 'Practice analysis failed' });
