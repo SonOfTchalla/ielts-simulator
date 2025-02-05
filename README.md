@@ -1,7 +1,9 @@
 # IELTS Speaking Test Simulator
 
 ## Overview
-This tool simulates a real-time IELTS Speaking Test. It allows users to practice speaking English and provides performance assessments based on IELTS criteria.
+The IELTS Speaking Test Simulator is a tool designed to help users practice and simulate the IELTS Speaking Test. It provides real-time transcription, feedback, and scoring based on IELTS band descriptors. The tool supports two modes:
+1. Practice Mode: Instant feedback for each response.
+2. Test Mode: Comprehensive feedback at the end of a full test session.
 
 ## Features
 - Real-time transcription using Google Speech-to-Text API.
