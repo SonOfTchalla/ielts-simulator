@@ -122,6 +122,22 @@ async function processAudio() {
     }
 }
 
+// Submit full test session
+async function submitFullTest() {
+    const response = await fetch('/analyze-full-test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            part1: testSessionData.part1,
+            part2: testSessionData.part2,
+            part3: testSessionData.part3
+        })
+    });
+    
+    const result = await response.json();
+    showFinalFeedback(result);
+}
+
 // Start a practice session
 function startPracticeSession() {
     questionElement.textContent = part1Questions[currentQuestionIndex];
