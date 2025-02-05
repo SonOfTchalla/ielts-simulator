@@ -53,8 +53,8 @@ function resetInterface() {
 }
 
 // Event listeners
-practiceModeButton.addEventListener('click', initializePracticeMode);
-testModeButton.addEventListener('click', initializeTestMode);
+practiceModeButton.addEventListener('click', startPracticeSession);
+testModeButton.addEventListener('click', startTestSession);
 
 // Start recording
 startRecordingButton.addEventListener('click', async () => {
