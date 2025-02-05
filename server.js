@@ -122,7 +122,7 @@ async function calculateScores(transcript) {
                 2. Lexical Resource (0-9)
                 3. Grammatical Range and Accuracy (0-9)
                 4. Pronunciation (0-9)
-                Provide scores in the following format:
+                Strictly provide scores in the following format:
                 fluency: [score]
                 lexical: [score]
                 grammar: [score]
