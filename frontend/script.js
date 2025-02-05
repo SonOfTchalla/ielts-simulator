@@ -79,6 +79,23 @@ downloadReportButton.id = 'download-report';
 downloadReportButton.disabled = true; // Disabled by default
 document.querySelector('#test-interface').appendChild(downloadReportButton);
 
+async function processPracticeAudio() {
+    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    practiceState.audioBlobs = [audioBlob]; // Only keep last recording
+    
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'recording.wav');
+    
+    // Get immediate feedback
+    const response = await fetch('/analyze-practice', {
+        method: 'POST',
+        body: formData
+    });
+    
+    const result = await response.json();
+    showPracticeFeedback(result);
+}
+
 // Process recorded audio
 async function processAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
