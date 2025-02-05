@@ -212,7 +212,12 @@ function showNextTestQuestion() {
 const nextQuestionButton = document.createElement('button');
 nextQuestionButton.textContent = 'Next Question';
 nextQuestionButton.id = 'next-question';
-nextQuestionButton.addEventListener('click', showNextTestQuestion);
+nextQuestionButton.addEventListener('click', () => {
+    if (currentPart === 2 && timer) {
+        clearInterval(timer); // Stop the timer if moving from Part 2
+    }
+    showNextTestQuestion();
+});
 document.querySelector('#test-interface').appendChild(nextQuestionButton);
 
 
