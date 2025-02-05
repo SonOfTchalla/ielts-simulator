@@ -12,8 +12,21 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 //API Keys
 const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY;
 
+// Practice mode endpoint
+app.post('/analyze-practice', upload.single('file'), async (req, res) => {
+    try {
+        const transcript = await transcribeAudio(req.file.path);
+        const feedback = await analyzeTranscript(transcript);
+        const suggestions = await getVocabularySuggestions(transcript);
+        
+        res.json({ transcript, feedback, suggestions });
+    } catch (error) {
+        console.error('Practice mode error:', error);
+        res.status(500).json({ error: 'Practice analysis failed' });
+    }
+});
 
-// Endpoint to analyze audio
+// Test mode Endpoint to analyze audio
 app.post('/analyze-full-test', express.json(), async (req, res) => {
     try {
         const { part1, part2, part3 } = req.body;
