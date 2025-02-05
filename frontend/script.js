@@ -29,43 +29,28 @@ let testState = {
 };
 
 const part1Questions = [
-    "Can you tell me about your hometown?"/*,
+    "Can you tell me about your hometown?",
     "What do you like most about your job or studies?",
     "Do you prefer reading books or watching movies? Why?",
     "How do you usually spend your weekends?",
-    "What kind of weather do you enjoy the most?"*/
+    "What kind of weather do you enjoy the most?"
 ];
 
 const part2Questions = [
-    "Describe a memorable trip you have taken. You should say: where you went, who you went with, what you did, and why it was memorable."/*,
+    "Describe a memorable trip you have taken. You should say: where you went, who you went with, what you did, and why it was memorable.",
     "Talk about a book that you recently read. You should say: what the book is about, why you chose it, and what you learned from it.",
     "Describe a person who has influenced you. You should say: who the person is, how you know them, and why they have influenced you.",
     "Describe a skill you would like to learn. You should say: what the skill is, why you want to learn it, and how you plan to learn it.",
-    "Talk about a piece of art (e.g., painting, sculpture) that you admire. You should say: what it is, where you saw it, and why you admire it."*/
+    "Talk about a piece of art (e.g., painting, sculpture) that you admire. You should say: what it is, where you saw it, and why you admire it."
 ];
 
 const part3Questions = [
-    "How do you think travel can broaden a person's perspective?"/*,
+    "How do you think travel can broaden a person's perspective?",
     "Do you think reading books is more beneficial than watching movies? Why or why not?",
     "What qualities do you think make someone a good role model?",
     "How important is it for people to learn new skills throughout their lives?",
-    "What role do you think art plays in society?"*/
+    "What role do you think art plays in society?"
 ];
-
-// Current question index
-let currentPart = 1;
-let currentQuestionIndex = 0;
-
-// Reset the interface
-function resetInterface() {
-    transcriptElement.textContent = '';
-    feedbackElement.textContent = '';
-    timerElement.textContent = 'Time Left: 120s';
-    timerElement.classList.add('hidden'); // Hide the timer
-    clearInterval(timer); // Clear any active timer
-    currentPart = 1; // Reset to Part 1
-    currentQuestionIndex = 0; // Reset question index
-}
 
 // Event listeners
 practiceModeButton.addEventListener('click', startPracticeSession);
@@ -169,7 +154,7 @@ function showPracticeFeedback(result) {
         setTimeout(() => {
             practiceState.currentQuestionIndex++;
             showNextPracticeQuestion();
-        }, 3000); // Auto-advance after 3 seconds
+        }, 30000); // Auto-advance after 30 seconds
     }
 }
 
@@ -237,6 +222,8 @@ function showFinalFeedback(result) {
 
 // Start a practice session
 function startPracticeSession() {
+    practiceModeButton.classList.add('selected');
+    testModeButton.classList.remove('selected');
     currentMode = 'practice';
     practiceState = {
         currentQuestionIndex: 0,
@@ -261,6 +248,8 @@ function startTimer() {
 
 // Start a full test session
 function startTestSession() {
+    testModeButton.classList.add('selected');
+    practiceModeButton.classList.remove('selected');
     currentMode = 'test';
     testState = {
         part1: [],
