@@ -152,7 +152,14 @@ function showFinalFeedback(result) {
 
 // Start a practice session
 function startPracticeSession() {
-    questionElement.textContent = part1Questions[currentQuestionIndex];
+    currentMode = 'practice';
+    practiceState = {
+        currentQuestionIndex: 0,
+        audioBlobs: []
+    };
+    testInterface.classList.remove('hidden');
+    timerElement.classList.add('hidden');
+    showNextPracticeQuestion();
 }
 
 function startTimer() {
