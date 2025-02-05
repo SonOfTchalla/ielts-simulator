@@ -52,24 +52,9 @@ function resetInterface() {
     currentQuestionIndex = 0; // Reset question index
 }
 
-// Initialize the test interface
-practiceModeButton.addEventListener('click', () => {
-    testInterface.classList.remove('hidden');
-    resetInterface(); // Reset fields and hide timer
-    startPracticeSession();
-    practiceModeButton.classList.add('selected');
-    testModeButton.classList.remove('selected');
-    scoresElement.classList.add('hidden');
-});
-
-testModeButton.addEventListener('click', () => {
-    testInterface.classList.remove('hidden');
-    resetInterface(); // Reset fields
-    timerElement.classList.remove('hidden'); // Show the timer
-    startTestSession();
-    testModeButton.classList.add('selected');
-    practiceModeButton.classList.remove('selected');
-});
+// Event listeners
+practiceModeButton.addEventListener('click', initializePracticeMode);
+testModeButton.addEventListener('click', initializeTestMode);
 
 // Start recording
 startRecordingButton.addEventListener('click', async () => {
