@@ -21,6 +21,40 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 
 ---
 
+## Design Choices
+
+### 1. LLM Integration
+- **Model**: Falcon-7B-Instruct (via Hugging Face Inference API).
+- **Purpose**: Evaluate user responses based on IELTS band descriptors.
+- **Prompt Design**:
+  - The model is prompted to evaluate responses and provide scores in a specific format:
+    ```
+    fluency: [score]
+    lexical: [score]
+    grammar: [score]
+    pronunciation: [score]
+    ```
+  - The response is parsed to extract scores and feedback.
+
+### 2. Scoring System
+- **Criteria**:
+  - Fluency & Coherence
+  - Lexical Resource
+  - Grammatical Range & Accuracy
+  - Pronunciation
+- **Scoring Logic**:
+  - Scores are provided by the LLM based on the transcript.
+  - The overall band score is calculated as the average of the four scores.
+
+### 3. APIs Used
+- **Google Speech-to-Text API**:
+  - Converts user audio into text for analysis.
+- **Hugging Face Inference API**:
+  - Hosts the Falcon-7B-Instruct model for evaluating responses.
+- **jsPDF**:
+  - Generates a downloadable PDF report.
+
+---
 ## Setup
 1. Clone the repository.
 2. Install dependencies: `npm install express multer axios @google-cloud/speech`.
