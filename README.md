@@ -83,7 +83,7 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 
 ---
 
-How It Works
+## How It Works
 
 ### Practice Mode
 1. User selects **Practice Mode**.
@@ -104,7 +104,7 @@ How It Works
 
 ---
 
-How to Test
+## How to Test
 
 ### 1. Setup
 1. Clone the repository.
