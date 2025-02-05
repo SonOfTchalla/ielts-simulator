@@ -54,14 +54,6 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 - **jsPDF**:
   - Generates a downloadable PDF report.
 
----
-## Setup
-1. Clone the repository.
-2. Install dependencies: `npm install express multer axios @google-cloud/speech`.
-3. Add your API keys in `server.js`.
-4. Run the server: `node server.js`.
-5. Open `index.html` in your browser.
-
 
 ## Challenges and Solutions
 
@@ -111,3 +103,33 @@ How It Works
 5. A PDF report is generated with the transcript, feedback, and scores.
 
 ---
+
+How to Test
+
+### 1. Setup
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install express multer axios @google-cloud/speech
+     ```
+3. Add API keys for Google Speech-to-Text and Hugging Face in `server.js`.
+4. Start the backend server:
+    ```bash
+    node server.js
+    ```
+5. Open `index.html` in your browser.
+
+### 2. Practice Mode
+1. Click **Practice Mode**.
+2. Answer the questions displayed.
+3. Verify that instant feedback is provided after each response.
+4. Check that the tool automatically advances to the next question.
+
+### 3. Test Mode
+1. Click **Test Mode**.
+2. Complete all three parts of the test:
+-Answer questions in Part 1.
+-Complete the long turn in Part 2 (verify the timer works).
+-Answer questions in Part 3.
+3. Verify that comprehensive feedback is provided at the end of the test.
+4. Click **Download Report** and check the PDF for proper formatting and content.
