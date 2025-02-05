@@ -14,18 +14,31 @@ const HUGGING_FACE_API_KEY = process.env.HUGGING_FACE_API_KEY;
 
 
 // Endpoint to analyze audio
-app.post('/analyze', upload.single('file'), async (req, res) => {
-    const filePath = req.file.path;
+app.post('/analyze-full-test', express.json(), async (req, res) => {
+    try {
+        const { part1, part2, part3 } = req.body;
+        const fullTranscript = [
+            "Part 1 Responses:",
+            ...part1,
+            "\nPart 2 Response:",
+            ...part2,
+            "\nPart 3 Discussion:",
+            ...part3
+        ].join('\n');
 
-    // Step 1: Transcribe audio using Google Speech-to-Text API
-    const transcript = await transcribeAudio(filePath);
+        // Get comprehensive feedback
+        const feedback = await analyzeTranscript(fullTranscript);
+        const scores = await calculateScores(fullTranscript);
 
-    // Step 2: Analyze transcript and calculate scores
-    const feedback = await analyzeTranscript(transcript);
-    const scores = await calculateScores(transcript);
-
-    // Send response with transcript, feedback, and scores
-    res.json({ transcript, feedback, scores });
+        res.json({
+            fullTranscript,
+            feedback,
+            scores
+        });
+    } catch (error) {
+        console.error('Error processing full test:', error);
+        res.status(500).json({ error: 'Test processing failed' });
+    }
 });
 
 // Transcribe audio using Google Speech-to-Text API
