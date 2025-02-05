@@ -62,17 +62,31 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 4. Run the server: `node server.js`.
 5. Open `index.html` in your browser.
 
-## APIs Used
-- Google Speech-to-Text API for transcription.
-- Falcon-7B-Instruct via Hugging Face for feedback generation.
-
-## Deployment
-- Frontend: Host on Vercel.
-- Backend: Deploy using Docker on Fly.io.
 
 ## Challenges and Solutions
-1. **Real-Time Transcription Delay**: Use streaming transcription and optimize audio format.
-2. **Pronunciation Feedback**: Use OpenAI Whisper or Praat for advanced feedback.
-3. **API Costs**: Use free-tier APIs or open-source alternatives.
-4. **User Experience**: Add a timer and progress tracker.
-5. **Deployment**: Use Docker for containerization and deploy on Fly.io.
+
+### 1. Model Response Format
+- **Challenge**: The Falcon-7B-Instruct model sometimes returns responses in an unexpected format (e.g., numbered lists or additional text).
+- **Solution**:
+  - Normalize the response by removing numbering and irrelevant text.
+  - Use a key-mapping system to extract scores from the response.
+
+### 2. Text Overlapping in PDF
+- **Challenge**: Long text in the PDF report caused overlapping and poor readability.
+- **Solution**:
+  - Use `doc.splitTextToSize()` to wrap text within the page width.
+  - Dynamically calculate the Y-position for each line and add page breaks when necessary.
+
+### 3. Real-Time Transcription Delay
+- **Challenge**: Delays in transcription affected the user experience.
+- **Solution**:
+  - Optimize the audio format (e.g., use `audio/webm` instead of `audio/wav`).
+  - Streamline the backend processing to minimize latency.
+
+### 4. Mode Separation
+- **Challenge**: Practice Mode and Test Mode had overlapping functionality, causing bugs.
+- **Solution**:
+  - Separate state management for each mode using dedicated objects (`practiceState` and `testState`).
+  - Implement distinct logic for processing and feedback in each mode.
+
+---
