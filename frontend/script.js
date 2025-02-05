@@ -138,6 +138,14 @@ async function submitFullTest() {
     showFinalFeedback(result);
 }
 
+// Show final feedback
+function showFinalFeedback(result) {
+    transcriptElement.textContent = `Full Session Transcript:\n${result.fullTranscript}`;
+    feedbackElement.textContent = `Final Feedback:\n${result.feedback}`;
+    scoresElement.textContent = `Scores: ${JSON.stringify(result.scores, null, 2)}`;
+    downloadReportButton.disabled = false;
+}
+
 // Start a practice session
 function startPracticeSession() {
     questionElement.textContent = part1Questions[currentQuestionIndex];
