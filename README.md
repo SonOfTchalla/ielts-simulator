@@ -90,3 +90,24 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
   - Implement distinct logic for processing and feedback in each mode.
 
 ---
+
+How It Works
+
+### Practice Mode
+1. User selects **Practice Mode**.
+2. User answers questions from Part 1 of the IELTS Speaking Test.
+3. Audio is recorded and sent to the backend for transcription.
+4. The transcript is evaluated by the LLM, and instant feedback is displayed.
+5. The tool automatically advances to the next question after 3 seconds.
+
+### Test Mode
+1. User selects **Test Mode**.
+2. User completes all three parts of the IELTS Speaking Test:
+   - **Part 1**: Introduction and Interview.
+   - **Part 2**: Long Turn (with a timer).
+   - **Part 3**: Two-Way Discussion.
+3. Audio is recorded and transcribed for each response.
+4. At the end of the test, all responses are evaluated, and comprehensive feedback is provided.
+5. A PDF report is generated with the transcript, feedback, and scores.
+
+---
