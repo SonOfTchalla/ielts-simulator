@@ -6,6 +6,7 @@ const startRecordingButton = document.getElementById('start-recording');
 const transcriptElement = document.getElementById('transcript');
 const feedbackElement = document.getElementById('feedback');
 const timerElement = document.getElementById('timer');
+const scoresElement = document.getElementById('scores');
 
 let recorder;
 let audioChunks = [];
@@ -13,27 +14,27 @@ let timer;
 let timeLeft = 120; // 2 minutes for Part 2 of the test
 
 const part1Questions = [
-    "Can you tell me about your hometown?",
+    "Can you tell me about your hometown?"/*,
     "What do you like most about your job or studies?",
     "Do you prefer reading books or watching movies? Why?",
     "How do you usually spend your weekends?",
-    "What kind of weather do you enjoy the most?"
+    "What kind of weather do you enjoy the most?"*/
 ];
 
 const part2Questions = [
-    "Describe a memorable trip you have taken. You should say: where you went, who you went with, what you did, and why it was memorable.",
+    "Describe a memorable trip you have taken. You should say: where you went, who you went with, what you did, and why it was memorable."/*,
     "Talk about a book that you recently read. You should say: what the book is about, why you chose it, and what you learned from it.",
     "Describe a person who has influenced you. You should say: who the person is, how you know them, and why they have influenced you.",
     "Describe a skill you would like to learn. You should say: what the skill is, why you want to learn it, and how you plan to learn it.",
-    "Talk about a piece of art (e.g., painting, sculpture) that you admire. You should say: what it is, where you saw it, and why you admire it."
+    "Talk about a piece of art (e.g., painting, sculpture) that you admire. You should say: what it is, where you saw it, and why you admire it."*/
 ];
 
 const part3Questions = [
-    "How do you think travel can broaden a person's perspective?",
+    "How do you think travel can broaden a person's perspective?"/*,
     "Do you think reading books is more beneficial than watching movies? Why or why not?",
     "What qualities do you think make someone a good role model?",
     "How important is it for people to learn new skills throughout their lives?",
-    "What role do you think art plays in society?"
+    "What role do you think art plays in society?"*/
 ];
 
 // Current question index
@@ -85,6 +86,13 @@ startRecordingButton.addEventListener('click', async () => {
     }
 });
 
+// Add a "Download Report" button
+const downloadReportButton = document.createElement('button');
+downloadReportButton.textContent = 'Download Report';
+downloadReportButton.id = 'download-report';
+downloadReportButton.disabled = true; // Disabled by default
+document.querySelector('#test-interface').appendChild(downloadReportButton);
+
 // Process recorded audio
 async function processAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
@@ -102,10 +110,10 @@ async function processAudio() {
     transcriptElement.textContent = `Transcript: ${result.transcript}`;
     feedbackElement.textContent = `Feedback: ${result.feedback}`;
 
-     // Enable the "Download Report" button only in Test Mode
-    if (testModeButton.classList.contains('selected')) {
+    // Enable the "Download Report" button only in Test Mode and after completing all parts
+    if (testModeButton.classList.contains('selected') && currentPart === 3 && currentQuestionIndex === part3Questions.length - 1) {
         // Calculate scores
-        const scores = await calculateScores(result.transcript);
+        const scores = result.scores;
 
         // Enable the "Download Report" button and update its event listener
         downloadReportButton.disabled = false;
@@ -113,8 +121,8 @@ async function processAudio() {
             generatePDFReport(result.transcript, result.feedback, scores);
         };
 
-    // Display scores in the UI
-    displayScores(scores);
+        // Display scores in the UI
+        displayScores(scores);
     }
 }
 
@@ -190,6 +198,11 @@ document.querySelector('#test-interface').appendChild(nextQuestionButton);
 
 
 function generatePDFReport(transcript, feedback ,scores) {
+    console.log('Generating PDF...');
+    console.log('Transcript:', transcript);
+    console.log('Feedback:', feedback);
+    console.log('Scores:', scores);
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
@@ -221,12 +234,6 @@ function generatePDFReport(transcript, feedback ,scores) {
     doc.save('ielts_speaking_report.pdf');
 }
 
-// Add a "Download Report" button
-const downloadReportButton = document.createElement('button');
-downloadReportButton.textContent = 'Download Report';
-downloadReportButton.id = 'download-report';
-downloadReportButton.disabled = true; // Disabled by default
-document.querySelector('#test-interface').appendChild(downloadReportButton);
 
 function displayScores(scores) {
     const overallScore = ((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1);
