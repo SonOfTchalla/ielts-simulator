@@ -96,33 +96,29 @@ document.querySelector('#test-interface').appendChild(downloadReportButton);
 // Process recorded audio
 async function processAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    testSessionData.audioBlobs.push(audioBlob);
+    
+    // Store transcript temporarily
     const formData = new FormData();
     formData.append('file', audioBlob, 'recording.wav');
-
-    // Send audio to the backend for transcription and analysis
-    const response = await fetch('/analyze', {
+    
+    const response = await fetch('/transcribe', {
         method: 'POST',
         body: formData
     });
     const result = await response.json();
-
-    // Display transcript and feedback
-    transcriptElement.textContent = `Transcript: ${result.transcript}`;
-    feedbackElement.textContent = `Feedback: ${result.feedback}`;
-
-    // Enable the "Download Report" button only in Test Mode and after completing all parts
-    if (testModeButton.classList.contains('selected') && currentPart === 3 && currentQuestionIndex === part3Questions.length - 1) {
-        // Calculate scores
-        const scores = result.scores;
-
-        // Enable the "Download Report" button and update its event listener
-        downloadReportButton.disabled = false;
-        downloadReportButton.onclick = () => {
-            generatePDFReport(result.transcript, result.feedback, scores);
-        };
-
-        // Display scores in the UI
-        displayScores(scores);
+    
+    // Store transcript based on current part
+    switch(currentPart) {
+        case 1:
+            testSessionData.part1.push(result.transcript);
+            break;
+        case 2:
+            testSessionData.part2.push(result.transcript);
+            break;
+        case 3:
+            testSessionData.part3.push(result.transcript);
+            break;
     }
 }
 
