@@ -133,3 +133,8 @@ How to Test
 -Answer questions in Part 3.
 3. Verify that comprehensive feedback is provided at the end of the test.
 4. Click **Download Report** and check the PDF for proper formatting and content.
+
+---
+
+### Conclusion
+The IELTS Speaking Test Simulator is a robust tool for practicing and simulating the IELTS Speaking Test. By leveraging advanced APIs and LLMs, it provides accurate feedback and scoring, helping users improve their speaking skills. The separation of Practice Mode and Test Mode ensures a smooth and focused user experience.
