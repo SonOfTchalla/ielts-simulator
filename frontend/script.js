@@ -68,7 +68,11 @@ startRecordingButton.addEventListener('click', async () => {
 // Handles recording in practice mode
 async function handlePracticeRecording() {
     if (recorder && recorder.state === 'recording') {
-        recorder.stop();
+        await new Promise(resolve => {
+            recorder.onstop = resolve;
+            recorder.stop();
+        });
+        
         startRecordingButton.textContent = 'Start Recording';
         await processPracticeAudio();
     } else {
@@ -85,7 +89,11 @@ async function handlePracticeRecording() {
 async function handleTestRecording() {
     if (recorder && recorder.state === 'recording') {
         // Stop recording
-        recorder.stop();
+        await new Promise(resolve => {
+            recorder.onstop = resolve;
+            recorder.stop();
+        });
+        
         startRecordingButton.textContent = 'Start Recording';
 
         // Process the recorded audio
@@ -165,7 +173,7 @@ async function processTestAudio() {
         console.error("Audio blob is empty!");
         return;
     }
-    
+
     testState.audioBlobs.push(audioBlob);
     
     // Store transcript temporarily without feedback
