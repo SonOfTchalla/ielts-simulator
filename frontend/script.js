@@ -118,12 +118,12 @@ function showNextPracticeQuestion() {
     scoresElement.textContent = '';
 }
 
-// Process recorded audio
-async function processAudio() {
+// Process recorded audio in test mode
+async function processTestAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-    testSessionData.audioBlobs.push(audioBlob);
+    testState.audioBlobs.push(audioBlob);
     
-    // Store transcript temporarily
+    // Store transcript temporarily without feedback
     const formData = new FormData();
     formData.append('file', audioBlob, 'recording.wav');
     
@@ -134,16 +134,10 @@ async function processAudio() {
     const result = await response.json();
     
     // Store transcript based on current part
-    switch(currentPart) {
-        case 1:
-            testSessionData.part1.push(result.transcript);
-            break;
-        case 2:
-            testSessionData.part2.push(result.transcript);
-            break;
-        case 3:
-            testSessionData.part3.push(result.transcript);
-            break;
+    switch(testState.currentPart) {
+        case 1: testState.part1.push(result.transcript); break;
+        case 2: testState.part2.push(result.transcript); break;
+        case 3: testState.part3.push(result.transcript); break;
     }
 }
 
