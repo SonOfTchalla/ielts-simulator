@@ -80,7 +80,7 @@ button:hover {
     margin-top:  1.5rem;
 }
 
-#question {
+#question, #part {
     font-size: 1.25rem;
     font-weight: bold;
     color: #34495e;
