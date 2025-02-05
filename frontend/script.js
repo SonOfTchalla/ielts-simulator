@@ -81,6 +81,32 @@ async function handlePracticeRecording() {
     }
 }
 
+// Handles recording in practice mode
+async function handleTestRecording() {
+    if (recorder && recorder.state === 'recording') {
+        // Stop recording
+        recorder.stop();
+        startRecordingButton.textContent = 'Start Recording';
+
+        // Process the recorded audio
+        await processTestAudio();
+
+        // Move to the next question automatically (except in Part 2)
+        if (testState.currentPart !== 2) {
+            showNextTestQuestion();
+        }
+    } else {
+        // Start recording
+        audioChunks = [];
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = (e) => audioChunks.push(e.data);
+        recorder.onstop = () => {}; // No immediate processing for test mode
+        recorder.start();
+        startRecordingButton.textContent = 'Stop Recording';
+    }
+}
+
 // Add a "Download Report" button
 const downloadReportButton = document.createElement('button');
 downloadReportButton.textContent = 'Download Report';
