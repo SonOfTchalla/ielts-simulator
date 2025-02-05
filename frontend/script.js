@@ -186,6 +186,7 @@ function showNextTestQuestion() {
         // Part 1: Show next question
         questionElement.textContent = part1Questions[currentQuestionIndex];
         currentQuestionIndex++;
+        timerElement.style.display = 'none'; // Hide the timer
     } else if (currentPart === 2) {
         // Part 2: Show the long turn question and start the timer
         questionElement.textContent = part2Questions[currentQuestionIndex];
@@ -195,6 +196,7 @@ function showNextTestQuestion() {
         // Part 3: Show next question
         questionElement.textContent = part3Questions[currentQuestionIndex];
         currentQuestionIndex++;
+        timerElement.style.display = 'none'; // Hide the timer
     } else {
         // Move to the next part or end the test
         if (currentPart < 3) {
