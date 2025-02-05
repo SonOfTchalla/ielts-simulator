@@ -65,6 +65,22 @@ startRecordingButton.addEventListener('click', async () => {
     }
 });
 
+// Handles recording in practice mode
+async function handlePracticeRecording() {
+    if (recorder && recorder.state === 'recording') {
+        recorder.stop();
+        startRecordingButton.textContent = 'Start Recording';
+        await processPracticeAudio();
+    } else {
+        audioChunks = [];
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = (e) => audioChunks.push(e.data);
+        recorder.start();
+        startRecordingButton.textContent = 'Stop Recording';
+    }
+}
+
 // Add a "Download Report" button
 const downloadReportButton = document.createElement('button');
 downloadReportButton.textContent = 'Download Report';
