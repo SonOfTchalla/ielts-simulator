@@ -323,38 +323,77 @@ nextQuestionButton.addEventListener('click', () => {
 document.querySelector('#test-interface').appendChild(nextQuestionButton);
 
 
-function generatePDFReport(transcript, feedback ,scores) {
-    console.log('Generating PDF...');
-    console.log('Transcript:', transcript);
-    console.log('Feedback:', feedback);
-    console.log('Scores:', scores);
-
+function generatePDFReport(transcript, feedback, scores) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    // Constants for layout
+    const margin = 10;
+    const lineHeight = 7;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const maxLineWidth = pageWidth - 2 * margin;
+    let yPosition = margin;
+
     // Add title
     doc.setFontSize(18);
-    doc.text('IELTS Speaking Test Report', 10, 10);
+    doc.text('IELTS Speaking Test Report', margin, yPosition);
+    yPosition += lineHeight * 2; // Add extra space after title
 
-    // Add transcript
+    // Add transcript section
+    doc.setFontSize(14);
+    doc.text('Transcript:', margin, yPosition);
+    yPosition += lineHeight;
+
     doc.setFontSize(12);
-    doc.text('Transcript:', 10, 20);
-    doc.text(transcript, 10, 30, { maxWidth: 180 });
+    const transcriptLines = doc.splitTextToSize(transcript, maxLineWidth);
+    transcriptLines.forEach(line => {
+        if (yPosition > doc.internal.pageSize.getHeight() - margin) {
+            doc.addPage(); // Add new page if content exceeds page height
+            yPosition = margin;
+        }
+        doc.text(line, margin, yPosition);
+        yPosition += lineHeight;
+    });
+    yPosition += lineHeight; // Add extra space after transcript
 
-    // Add feedback
-    doc.text('Feedback:', 10, 80);
-    doc.text(feedback, 10, 90, { maxWidth: 180 });
+    // Add feedback section
+    doc.setFontSize(14);
+    doc.text('Feedback:', margin, yPosition);
+    yPosition += lineHeight;
 
-    // Add scores
-    doc.text('Scores:', 10, 140);
-    doc.text(`Fluency & Coherence: ${scores.fluency}`, 10, 150);
-    doc.text(`Lexical Resource: ${scores.lexical}`, 10, 160);
-    doc.text(`Grammatical Range & Accuracy: ${scores.grammar}`, 10, 170);
-    doc.text(`Pronunciation: ${scores.pronunciation}`, 10, 180);
+    doc.setFontSize(12);
+    const feedbackLines = doc.splitTextToSize(feedback, maxLineWidth);
+    feedbackLines.forEach(line => {
+        if (yPosition > doc.internal.pageSize.getHeight() - margin) {
+            doc.addPage();
+            yPosition = margin;
+        }
+        doc.text(line, margin, yPosition);
+        yPosition += lineHeight;
+    });
+    yPosition += lineHeight; // Add extra space after feedback
 
-    // Calculate overall band score
-    const overallScore = ((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1);
-    doc.text(`Overall Band Score: ${overallScore}`, 10, 190);
+    // Add scores section
+    doc.setFontSize(14);
+    doc.text('Scores:', margin, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFontSize(12);
+    const scoresText = [
+        `Fluency & Coherence: ${scores.fluency}`,
+        `Lexical Resource: ${scores.lexical}`,
+        `Grammatical Range & Accuracy: ${scores.grammar}`,
+        `Pronunciation: ${scores.pronunciation}`,
+        `Overall Band Score: ${((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1)}`
+    ];
+    scoresText.forEach(line => {
+        if (yPosition > doc.internal.pageSize.getHeight() - margin) {
+            doc.addPage();
+            yPosition = margin;
+        }
+        doc.text(line, margin, yPosition);
+        yPosition += lineHeight;
+    });
 
     // Save the PDF
     doc.save('ielts_speaking_report.pdf');
