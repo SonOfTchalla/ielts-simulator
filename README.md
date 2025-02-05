@@ -138,3 +138,8 @@ The IELTS Speaking Test Simulator is a tool designed to help users practice and 
 
 ### Conclusion
 The IELTS Speaking Test Simulator is a robust tool for practicing and simulating the IELTS Speaking Test. By leveraging advanced APIs and LLMs, it provides accurate feedback and scoring, helping users improve their speaking skills. The separation of Practice Mode and Test Mode ensures a smooth and focused user experience.
+
+---
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/SonOfTchalla/ielts-simulator/blob/main/LICENSE "License") file for details.
