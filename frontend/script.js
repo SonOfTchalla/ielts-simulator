@@ -153,14 +153,10 @@ let testSessionData = {
 
 // Start a full test session
 function startTestSession() {
-    if (currentPart === 1) {
-        questionElement.textContent = part1Questions[currentQuestionIndex];
-    } else if (currentPart === 2) {
-        questionElement.textContent = part2Questions[currentQuestionIndex];
-        startTimer();
-    } else if (currentPart === 3) {
-        questionElement.textContent = part3Questions[currentQuestionIndex];
-    }
+    testSessionData = { part1: [], part2: [], part3: [], audioBlobs: [] };
+    currentPart = 1;
+    currentQuestionIndex = 0;
+    showNextTestQuestion();
 }
 
 // Move to the next question
