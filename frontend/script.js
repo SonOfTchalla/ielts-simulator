@@ -59,6 +59,7 @@ practiceModeButton.addEventListener('click', () => {
     startPracticeSession();
     practiceModeButton.classList.add('selected');
     testModeButton.classList.remove('selected');
+    scoresElement.classList.add('hidden');
 });
 
 testModeButton.addEventListener('click', () => {
@@ -268,4 +269,7 @@ function generatePDFReport(transcript, feedback ,scores) {
 function displayScores(scores) {
     const overallScore = ((scores.fluency + scores.lexical + scores.grammar + scores.pronunciation) / 4).toFixed(1);
     scoresElement.textContent = `Scores: Fluency (${scores.fluency}), Lexical (${scores.lexical}), Grammar (${scores.grammar}), Pronunciation (${scores.pronunciation}), Overall (${overallScore})`;
+    if(scoresElement.classList.contains('hidden')){
+    scoresElement.classList.remove('hidden');
+    }
 }
