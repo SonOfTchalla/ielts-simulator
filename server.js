@@ -41,6 +41,17 @@ app.post('/analyze-full-test', express.json(), async (req, res) => {
     }
 });
 
+// Separate transcription endpoint
+app.post('/transcribe', upload.single('file'), async (req, res) => {
+    try {
+        const transcript = await transcribeAudio(req.file.path);
+        res.json({ transcript });
+    } catch (error) {
+        console.error('Transcription error:', error);
+        res.status(500).json({ error: 'Transcription failed' });
+    }
+});
+
 // Transcribe audio using Google Speech-to-Text API
 async function transcribeAudio(filePath) {
     const speech = require('@google-cloud/speech');
