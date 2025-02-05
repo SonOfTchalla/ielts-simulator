@@ -142,7 +142,7 @@ async function submitFullTest() {
 function showFinalFeedback(result) {
     transcriptElement.textContent = `Full Session Transcript:\n${result.fullTranscript}`;
     feedbackElement.textContent = `Final Feedback:\n${result.feedback}`;
-    scoresElement.textContent = `Scores: ${JSON.stringify(result.scores, null, 2)}`;
+    displayScores(result.scores);
     downloadReportButton.disabled = false;
 }
 
@@ -187,11 +187,12 @@ function showNextTestQuestion() {
         questionElement.textContent = part1Questions[currentQuestionIndex];
         currentQuestionIndex++;
         timerElement.style.display = 'none'; // Hide the timer
-    } else if (currentPart === 2) {
+    } else if (currentPart === 2 && currentQuestionIndex < part2Questions.length) {
         // Part 2: Show the long turn question and start the timer
         questionElement.textContent = part2Questions[currentQuestionIndex];
         timerElement.style.display = 'block'; // Show the timer
         startTimer(); // Start the timer
+        currentQuestionIndex++;
     } else if (currentPart === 3 && currentQuestionIndex < part3Questions.length) {
         // Part 3: Show next question
         questionElement.textContent = part3Questions[currentQuestionIndex];
