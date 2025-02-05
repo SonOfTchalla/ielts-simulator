@@ -182,21 +182,26 @@ function startTestSession() {
 // Move to the next question
 function showNextTestQuestion() {
     if (currentPart === 1 && currentQuestionIndex < part1Questions.length) {
+        // Part 1: Show next question
         questionElement.textContent = part1Questions[currentQuestionIndex];
         currentQuestionIndex++;
     } else if (currentPart === 2) {
+        // Part 2: Show the long turn question and start the timer
         questionElement.textContent = part2Questions[currentQuestionIndex];
-        startTimer();
+        timerElement.style.display = 'block'; // Show the timer
+        startTimer(); // Start the timer
     } else if (currentPart === 3 && currentQuestionIndex < part3Questions.length) {
+        // Part 3: Show next question
         questionElement.textContent = part3Questions[currentQuestionIndex];
         currentQuestionIndex++;
     } else {
+        // Move to the next part or end the test
         if (currentPart < 3) {
             currentPart++;
             currentQuestionIndex = 0;
-            if (currentPart === 2) startTimer();
-            showNextTestQuestion();
+            showNextTestQuestion(); // Show the first question of the next part
         } else {
+            // End of test: Submit all responses for feedback
             submitFullTest();
         }
     }
@@ -206,7 +211,7 @@ function showNextTestQuestion() {
 const nextQuestionButton = document.createElement('button');
 nextQuestionButton.textContent = 'Next Question';
 nextQuestionButton.id = 'next-question';
-nextQuestionButton.addEventListener('click', nextQuestion);
+nextQuestionButton.addEventListener('click', showNextTestQuestion);
 document.querySelector('#test-interface').appendChild(nextQuestionButton);
 
 
