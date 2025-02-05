@@ -168,12 +168,19 @@ function startTimer() {
 }
 
 
-// Test session state
-let testSessionData = {
+// State variables
+let currentMode = null; // 'practice' or 'test'
+let practiceState = {
+    currentQuestionIndex: 0,
+    audioBlobs: []
+};
+let testState = {
     part1: [],
     part2: [],
     part3: [],
-    audioBlobs: []
+    audioBlobs: [],
+    currentPart: 1,
+    currentQuestionIndex: 0
 };
 
 // Start a full test session
