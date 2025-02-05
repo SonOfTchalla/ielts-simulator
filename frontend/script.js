@@ -192,9 +192,16 @@ let testState = {
 
 // Start a full test session
 function startTestSession() {
-    testSessionData = { part1: [], part2: [], part3: [], audioBlobs: [] };
-    currentPart = 1;
-    currentQuestionIndex = 0;
+    currentMode = 'test';
+    testState = {
+        part1: [],
+        part2: [],
+        part3: [],
+        audioBlobs: [],
+        currentPart: 1,
+        currentQuestionIndex: 0
+    };
+    testInterface.classList.remove('hidden');
     showNextTestQuestion();
 }
 
