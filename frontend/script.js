@@ -260,27 +260,24 @@ function startTestSession() {
 
 // Move to the next question
 function showNextTestQuestion() {
-    if (currentPart === 1 && currentQuestionIndex < part1Questions.length) {
+    if (testState.currentPart === 1 && testState.currentQuestionIndex < part1Questions.length) {
         // Part 1: Show next question
-        questionElement.textContent = part1Questions[currentQuestionIndex];
-        currentQuestionIndex++;
-        timerElement.style.display = 'none'; // Hide the timer
-    } else if (currentPart === 2 && currentQuestionIndex < part2Questions.length) {
+        questionElement.textContent = part1Questions[testState.currentQuestionIndex];
+        testState.currentQuestionIndex++;
+    } else if (testState.currentPart === 2) {
         // Part 2: Show the long turn question and start the timer
-        questionElement.textContent = part2Questions[currentQuestionIndex];
+        questionElement.textContent = part2Questions[testState.currentQuestionIndex];
         timerElement.style.display = 'block'; // Show the timer
         startTimer(); // Start the timer
-        currentQuestionIndex++;
-    } else if (currentPart === 3 && currentQuestionIndex < part3Questions.length) {
+    } else if (testState.currentPart === 3 && testState.currentQuestionIndex < part3Questions.length) {
         // Part 3: Show next question
-        questionElement.textContent = part3Questions[currentQuestionIndex];
-        currentQuestionIndex++;
-        timerElement.style.display = 'none'; // Hide the timer
+        questionElement.textContent = part3Questions[testState.currentQuestionIndex];
+        testState.currentQuestionIndex++;
     } else {
         // Move to the next part or end the test
-        if (currentPart < 3) {
-            currentPart++;
-            currentQuestionIndex = 0;
+        if (testState.currentPart < 3) {
+            testState.currentPart++;
+            testState.currentQuestionIndex = 0;
             showNextTestQuestion(); // Show the first question of the next part
         } else {
             // End of test: Submit all responses for feedback
