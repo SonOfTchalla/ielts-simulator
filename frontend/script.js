@@ -96,6 +96,21 @@ async function processPracticeAudio() {
     showPracticeFeedback(result);
 }
 
+// Shows feedback in practice mode
+function showPracticeFeedback(result) {
+    transcriptElement.textContent = `Transcript: ${result.transcript}`;
+    feedbackElement.textContent = `Feedback: ${result.feedback}`;
+    scoresElement.textContent = `Suggestions: ${result.suggestions}`;
+    
+    // Auto-advance or manual advance
+    if (practiceState.currentQuestionIndex < part1Questions.length - 1) {
+        setTimeout(() => {
+            practiceState.currentQuestionIndex++;
+            showNextPracticeQuestion();
+        }, 3000); // Auto-advance after 3 seconds
+    }
+}
+
 // Process recorded audio
 async function processAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
