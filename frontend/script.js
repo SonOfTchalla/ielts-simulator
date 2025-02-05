@@ -116,6 +116,11 @@ document.querySelector('#test-interface').appendChild(downloadReportButton);
 
 async function processPracticeAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    if (audioBlob.size === 0) {
+        console.error("Audio blob is empty!");
+        return;
+    }
+
     practiceState.audioBlobs = [audioBlob]; // Only keep last recording
     
     const formData = new FormData();
@@ -156,6 +161,11 @@ function showNextPracticeQuestion() {
 // Process recorded audio in test mode
 async function processTestAudio() {
     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    if (audioBlob.size === 0) {
+        console.error("Audio blob is empty!");
+        return;
+    }
+    
     testState.audioBlobs.push(audioBlob);
     
     // Store transcript temporarily without feedback
