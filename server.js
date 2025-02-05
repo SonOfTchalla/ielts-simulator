@@ -20,10 +20,12 @@ app.post('/analyze', upload.single('file'), async (req, res) => {
     // Step 1: Transcribe audio using Google Speech-to-Text API
     const transcript = await transcribeAudio(filePath);
 
-    // Step 2: Analyze transcript using LLM API
+    // Step 2: Analyze transcript and calculate scores
     const feedback = await analyzeTranscript(transcript);
+    const scores = await calculateScores(transcript);
 
-    res.json({ transcript, feedback });
+    // Send response with transcript, feedback, and scores
+    res.json({ transcript, feedback, scores });
 });
 
 // Transcribe audio using Google Speech-to-Text API
@@ -87,44 +89,76 @@ async function analyzeTranscript(transcript) {
 
 // Calculates scores based on the transcript
 async function calculateScores(transcript) {
-    const inputPrompt = `Evaluate the following IELTS Speaking Test transcript based on the four IELTS criteria: 
-    1. Fluency and Coherence (0-9)
-    2. Lexical Resource (0-9)
-    3. Grammatical Range and Accuracy (0-9)
-    4. Pronunciation (0-9)
-    Provide scores in JSON format like this: { "fluency": 7, "lexical": 6, "grammar": 7, "pronunciation": 6 }
-    User: ${transcript}`;
-
+    try {
         const response = await axios.post(
             'https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct',
             {
-                inputs: inputPrompt,
+                inputs: `Evaluate the following IELTS Speaking Test transcript based on the four IELTS criteria: 
+                1. Fluency and Coherence (0-9)
+                2. Lexical Resource (0-9)
+                3. Grammatical Range and Accuracy (0-9)
+                4. Pronunciation (0-9)
+                Provide scores in the following format:
+                fluency: [score]
+                lexical: [score]
+                grammar: [score]
+                pronunciation: [score]
+                Do not include any additional text or explanations.
+                Transcript: ${transcript}`,
                 parameters: {
-                    max_length: 100,
-                    temperature: 0.7,
-                    return_full_text: false
+                    max_new_tokens: 100, // Limit the response length
+                    return_full_text: false, // Only return the generated text
                 }
             },
-            { headers: { 'Authorization': `Bearer ${HUGGING_FACE_API_KEY}` } }
+            {
+                headers: {
+                    'Authorization': `Bearer ${HUGGING_FACE_API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            }
         );
 
-        // If the model is loading, retry after the estimated time
-        if (response.data.error && response.data.error.includes('currently loading')) {
-            const estimatedTime = response.data.estimated_time * 1000; // Convert to milliseconds
-            console.log(`Model is loading. Retrying in ${estimatedTime / 1000} seconds...`);
-            await new Promise(resolve => setTimeout(resolve, estimatedTime));
-            return analyzeTranscript(transcript); // Retry the request
-        }
+        // Extract the generated text from the response
+        const generatedText = response.data[0].generated_text;
+        console.log('Model Response:', generatedText); // Log the model's response
 
-        // Extract just the generated feedback without input text
-        const fullResponse = response.data[0].generated_text;
-        
-        // Remove the input prompt from the response if it appears
-        const cleanedResponse = fullResponse.replace(inputPrompt, '').trim();
+        // Parse the plain text response into a JSON object
+        const scores = {};
+        const lines = generatedText.split('\n');
+        lines.forEach(line => {
+            // Remove numbering (e.g., "1. Fluency: 8" -> "Fluency: 8")
+            const normalizedLine = line.replace(/^\d+\.\s*/, '').trim();
+            const [key, value] = normalizedLine.split(':').map(item => item.trim());
 
-    // Extract scores from the response
-    const scores = JSON.parse(response.data.choices[0].message.content);
-    return scores;
+            // Map the normalized key to the required key
+            const keyMapping = {
+                'Fluency': 'fluency',
+                'Lexical': 'lexical',
+                'Grammatical': 'grammar',
+                'Pronunciation': 'pronunciation'
+            };
+
+            if (key && value && keyMapping[key]) {
+                scores[keyMapping[key]] = parseInt(value, 10); // Convert score to integer
+            }
+        });
+
+        // Log the parsed scores
+        console.log('Parsed Scores:', scores);
+
+        // Ensure all scores are present
+        const requiredScores = ['fluency', 'lexical', 'grammar', 'pronunciation'];
+        requiredScores.forEach(score => {
+            if (!scores[score]) {
+                scores[score] = 0; // Fallback score
+            }
+        });
+
+        return scores;
+    } catch (error) {
+        console.error('Error calculating scores:', error);
+        return { fluency: 0, lexical: 0, grammar: 0, pronunciation: 0 }; // Fallback scores
+    }
 }
 
 // Start the server
