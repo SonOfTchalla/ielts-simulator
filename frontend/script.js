@@ -154,10 +154,11 @@ function startPracticeSession() {
 function startTimer() {
     timer = setInterval(() => {
         timeLeft--;
-        document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
+        timerElement.textContent = `Time Left: ${timeLeft}s`;
         if (timeLeft <= 0) {
             clearInterval(timer);
             alert('Time is up!');
+            showNextTestQuestion(); // Move to the next question automatically
         }
     }, 1000);
 }
