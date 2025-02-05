@@ -180,36 +180,24 @@ function startTestSession() {
 }
 
 // Move to the next question
-function nextQuestion() {
-    if (currentPart === 1) {
-        if (currentQuestionIndex < part1Questions.length - 1) {
-            currentQuestionIndex++;
-            questionElement.textContent = part1Questions[currentQuestionIndex];
-        } else {
-            currentPart = 2;
-            currentQuestionIndex = 0;
-            questionElement.textContent = part2Questions[currentQuestionIndex];
-            timerElement.style.display = 'block'; // Show timer for Part 2
-            startTimer();
-        }
+function showNextTestQuestion() {
+    if (currentPart === 1 && currentQuestionIndex < part1Questions.length) {
+        questionElement.textContent = part1Questions[currentQuestionIndex];
+        currentQuestionIndex++;
     } else if (currentPart === 2) {
-        if (currentQuestionIndex < part2Questions.length - 1) {
-            currentQuestionIndex++;
-            questionElement.textContent = part2Questions[currentQuestionIndex];
-        } else {
-            currentPart = 3;
+        questionElement.textContent = part2Questions[currentQuestionIndex];
+        startTimer();
+    } else if (currentPart === 3 && currentQuestionIndex < part3Questions.length) {
+        questionElement.textContent = part3Questions[currentQuestionIndex];
+        currentQuestionIndex++;
+    } else {
+        if (currentPart < 3) {
+            currentPart++;
             currentQuestionIndex = 0;
-            questionElement.textContent = part3Questions[currentQuestionIndex];
-            timerElement.style.display = 'none'; // Hide timer for Part 3
-            clearInterval(timer); // Stop the timer
-        }
-    } else if (currentPart === 3) {
-        if (currentQuestionIndex < part3Questions.length - 1) {
-            currentQuestionIndex++;
-            questionElement.textContent = part3Questions[currentQuestionIndex];
+            if (currentPart === 2) startTimer();
+            showNextTestQuestion();
         } else {
-            alert('Test completed!');
-            resetInterface();
+            submitFullTest();
         }
     }
 }
